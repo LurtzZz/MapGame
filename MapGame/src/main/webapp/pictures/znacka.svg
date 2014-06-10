@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>Layer 1</title>
+  <path stroke="#000" id="svg_1" d="m9.75,120.756187l112.763573,-111.006187l159.472694,0l112.763733,111.006187l0,156.987587l-112.763733,111.006226l-159.472694,0l-112.763573,-111.006226l0,-156.987587z" stroke-width="5" fill="#fc0a2e"/>
+  <text stroke="#000000" transform="rotate(-0.301359 205.162 199.6) matrix(1.47 0 0 1.52921 -16.5471 -86.9217)" xml:space="preserve" text-anchor="left" font-family="Helvetica, Arial, sans-serif" font-size="80" id="svg_2" y="214.037789" x="42.151292" stroke-width="3" fill="#ffffff">STOP</text>
+ </g>
+</svg>

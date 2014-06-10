@@ -8,17 +8,20 @@
     Author     : Lurtz
  */
 
-var map;
-var geocoder;
-var marker = null;
-var markerDesiredTown = null;
-var townName = "Prostìjov";
-var desiredTown = ["", ""];
-var markedTown = ["", ""];
-var line = null;
+var map;            //nastaveni mapy
+var geocoder;       // hodnota vydalenosti meyi mesty
+var marker = null;  // hracuv marker
+var markerDesiredTown = null; // marker hledaneho mesta
+var desiredTown = ["", ""]; //  hledane mesto
+var markedTown = ["", ""];  // hracovo mesto
+var line = null;    // spojnice mezi mesty
+var totalDistance;  // score ve hre
+var round;      
 
 var markerListener;
 
+
+//inicializace: nastaveni hledaneho mesta, pocet kol, vynulovani vsech promennych , nastaveni mapy
 function initialize() {     // inicializace mapy
     geocoder = new google.maps.Geocoder();
 
@@ -29,6 +32,7 @@ function initialize() {     // inicializace mapy
         zoomControl: true,
         panControl: false,
         overviewMapControl: false
+        
     };       
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);   // nastaveni mapy 
 
@@ -47,12 +51,19 @@ function initialize() {     // inicializace mapy
     markerListener = google.maps.event.addListener(map, 'click', function(event) { // pridani posluchace na pridani Markeru
         addMarker(event.latLng);
     });
-
-    setDesiredTown(townName);
+    
+    round = 4;
+    totalDistance = 0;
+    deletePlayerType();
+    getWantedPlace();
+    document.getElementById("valueMiskate").innerHTML = "Celkova chyba: " +Math.round(totalDistance) + " m";
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
+
+
+// funkce nastaví hledane mesto a zjisti jeho souradnice
 function setDesiredTown(name) {
         geocoder.geocode({'address': name}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
@@ -95,7 +106,7 @@ function randomCoordinates (){
 }
 
 
-// pridej marker
+// prida marker na mapu, pokud jiz marker na mape je, zmeni jeho pozici
 function addMarker(location) {
     if (!marker) {
         var markerNew = new google.maps.Marker({
@@ -114,10 +125,10 @@ function addMarker(location) {
 
 
 
-//najde spravne reseni
+// funkce vyhodnocující zda jsou oba markery nastavene, pokud ano pokusi se najít správný v?sledek
 function findResult(){
     if(!marker){
-        alert("Není zadaný bod na mapé.");        
+        alert("Neni zadany bod na mape.");        
     }
     else if(marker && markerDesiredTown){
              
@@ -138,31 +149,41 @@ function findResult(){
                 compareTown();
             }
             else {
-                alert('Geocoder skoncil s chyou: ' + status);
+                alert('Geocoder skoncil s chyou: ' + "Zadne vybrane misto.");
             }
         });
     }
     
 }
 
+
+
+// porovna hledane mesto s mestem ktere oznacil uzivatel
 function compareTown(){
     if(typeof markedTown[0] === "undefined"){
-        alert("Nebylo zvoleno mìsto.");        
+        alert("Nebylo zvoleno mesto.");        
     }
     else{
         if(markedTown[0] === desiredTown[0]){
-            alert("Trefil ses. Pøesnost 100%");
+            alert("Trefil ses!");
+            
+            playAudio();
+   
             marker.setAnimation(google.maps.Animation.BOUNCE);
             marker.setDraggable(false);
             google.maps.event.removeListener(markerListener);
+            changeButtonToNextGame();          
         }
         else{
-            alert("Netrefil ses. Pøesnost //vypocet//");
-
+            addPlace(markedTown[0]);
+            var distance= google.maps.geometry.spherical.computeDistanceBetween(markedTown[1], desiredTown[1]);
+            alert("Netrefil ses. Chyba: " + Math.round(distance) + " m");
+            totalDistance = totalDistance + distance;
+            document.getElementById("valueMiskate").innerHTML =  "Celkova chyba: " +Math.round(totalDistance) + " m";
             var markerNew = new google.maps.Marker({
                 position: desiredTown[1],
                 map: map,
-                title: "Hledané mìsto",
+                title: "Hledane mesto",
                 draggable: false,
                 animation: google.maps.Animation.DROP
             });
@@ -170,11 +191,46 @@ function compareTown(){
             marker.setDraggable(false);
             google.maps.event.removeListener(markerListener);
             var locations = [marker.getPosition(), markerDesiredTown.getPosition() ];
-            line = setLine(locations)
+            line = setLine(locations);
+            map.setCenter(markerDesiredTown.getPosition());
+
+            setPlayerType(markedTown[0]);
+            changeButtonToNextGame();
         }
     }
 }
 
+
+//funkce zahraje audio 
+function playAudio() {
+    var lucky = new Audio();
+    lucky.canPlayType("audio/ogg"); /* "", "maybe", "probably" */
+    lucky.src = "audio/DarkRangerYesAttack3.ogg";
+    lucky.addEventListener("timeupdate", function() {
+        if (lucky.duration < lucky.currentTime) {
+            lucky.pause();
+        } else {
+            console.log(lucky.currentTime);
+        }
+    }, false);
+    lucky.play();   
+}
+
+
+// funkce zobrazi tlacitko Dalsi kolo
+function changeButtonToNextGame(){
+    document.getElementById( "checkPlace" ).setAttribute( "onClick", "javascript: nextGame();" );
+    document.getElementById( "checkPlace" ).setAttribute( "value", "Dalsi kolo" );  
+}
+
+
+//funkce zobrazi tlacitko Zkontroluj tip
+function changeButtonToFindResult(){
+    document.getElementById( "checkPlace" ).setAttribute( "onClick", "javascript: findResult();" );
+    document.getElementById( "checkPlace" ).setAttribute( "value", "Zkontroluj tip" );    
+}
+
+//funkce nastací cervenou linku mezi mesty
 function setLine(locations){
     var line = new google.maps.Polyline({
     path: locations,
@@ -188,13 +244,14 @@ function setLine(locations){
   return line;
 }
 
-
+// nastavi informace o vybranem meste do pole
 function setMarkedTown(name, location){
     markedTown = [name, location];
 }
 
-
+//inicializace dalsího kola
 function nextGame(){
+    deletePlayerType();
     markerListener = google.maps.event.addListener(map, 'click', function(event) { // pridani posluchace na pridani Markeru
         addMarker(event.latLng);
     });
@@ -209,8 +266,65 @@ function nextGame(){
     }       
     marker = null;
     markerDesiredTown = null;
+    
+    
+    
+    if(round <= 0){      
+        popupWindow();
+    }
+    else{
+        round = round - 1;
+        getWantedPlace();
+        changeButtonToFindResult();
+    }
 }
 
+// inicializace nove hry 
+function newGame(){
+     markerListener = google.maps.event.addListener(map, 'click', function(event) { // pridani posluchace na pridani Markeru
+        addMarker(event.latLng);
+    });
+    if(line){
+        line.setMap(null);
+    }
+    if(marker){
+        marker.setMap(null);
+    }
+    if(markerDesiredTown){
+        markerDesiredTown.setMap(null);
+    }       
+    marker = null;
+    markerDesiredTown = null;
+    changeButtonToFindResult();
+    initialize();
+}
 
+//vypise mesto ktere si hrac tipnul
+function setPlayerType(place){
+    document.getElementById("predictPlace").innerHTML = "Tvuj tip:";
+    document.getElementById("predictPlaceName").innerHTML = place;
+}
 
+// vymaze informaci o meste ktere si hrac tipnul
+function deletePlayerType(){
+    document.getElementById("predictPlace").innerHTML = "";
+    document.getElementById("predictPlaceName").innerHTML = "";
+}
 
+//funkce vytvorí alert pro zadani hracova jmena. Pokud jmeno nevyplni nic se neodesle
+function popupWindow() {
+    var text = "Konec hry! Celkova chyba: " + Math.round(totalDistance) + "\n" +  "Nechce odelat skore ? Zadej svou prezdivku:";
+    var person = prompt( text,"");
+    if (person !== "") {       
+        addPlayerToBest(person, totalDistance);
+        newGame();
+    }
+    else{
+        newGame();
+    }
+}
+
+// prida hrace do tabulky nejlepsich hracu
+function addPlayerToBest(player, score){  
+    addPlayer(player, score);
+}

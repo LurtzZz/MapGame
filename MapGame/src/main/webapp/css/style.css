@@ -1,0 +1,302 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 10.5.2014, 0:23:21
+    Author     : Lurtz
+*/
+
+html {
+    height: 100%;
+}
+
+
+body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    background-color: #7dbfe9;
+    font-family: 'Alegreya Sans', sans-serif;
+}
+h1, h2{
+    margin: 0px;    
+}
+
+.wrapper {
+    width: 100%;
+    min-width: 600px;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+}
+
+
+/* Header */
+header {
+    height: 100px;
+    background-color: #f4f3f0;
+    text-align: center;  
+}
+
+nav a{
+    color: black;
+    text-decoration: none;
+    font-family: 'Alegreya Sans', sans-serif;
+    font-weight: 900;
+    padding-left: 30px;
+}
+
+nav a:hover {
+    color: #2149e7;
+}
+
+/* Middle */
+#content {
+    padding-bottom: 140px;
+    padding-top: 50px;
+    background-color: #7dbfe9;
+    box-shadow: inset 0 10em 7em -5em #f4f3f0;
+}
+
+
+.menu_cont{
+    margin: auto;
+    padding-top: 130px;
+    width: 512px;
+    height: 230px;
+    text-align: center;
+   /* background-color: yellow;*/
+    background-image: url(../pictures/cloud_1.svg);
+    background-size: 512px 360px;
+}
+
+h1{
+    color: #7dbfe9;
+    font-family: 'Alegreya Sans', sans-serif;
+    font-weight: 900;
+    font-size: 30px; 
+}
+
+.menu {
+    display: block;
+    color: black;
+    text-decoration: none;
+    font-family: 'Alegreya Sans', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+}
+
+
+.menu:active {
+    color: black;
+}
+
+.menu:hover {
+    color: #2149e7;
+}
+
+.table_cont{
+    margin: auto;
+    width: 500px;
+    text-align: center;
+    background-color: #f4f3f0;
+    border: solid 1px black;
+    padding-top: 40px;
+    border-radius: 100px;
+}
+
+#bestTable{   
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#bestTable td{
+    padding-right: 10px;
+    padding-left:  10px;
+    
+}
+
+
+.help_cont{
+    margin: auto;
+    width: 500px;
+    text-align: center;
+    background-color: #f4f3f0;
+    border: solid 1px black;
+    padding-top: 40px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 40px;
+    border-radius: 100px;
+}
+
+article{
+    text-align: left; 
+    padding-top: 40px;
+}
+
+article h2{
+    font-size: 20px;    
+}
+
+.help_p{
+     text-align: justify;
+}
+
+.kontakt{
+    text-align: left;
+}
+
+#jmeno {
+    font-size: 18px;
+    font-weight: bold;   
+}
+
+#telefon, #email{
+    font-size: 16px;
+}
+
+label ~ input:required:invalid{
+    box-shadow:  0 0 5px red;
+    
+}
+
+label ~ input:required:valid{
+    box-shadow:  0 0 5px greenyellow;
+}
+
+.kontakt > div {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+br + label{
+    font-weight: bold;
+}
+
+label:first-child {
+    font-weight: bold;
+}
+input:not([required]) {
+    font-weight: bold;
+}
+
+#stop{
+    width: 200px;
+    height: 200px;
+    padding-bottom: 40px;
+    padding-top: 40px;
+    -webkit-transition:width 2s, height 2s, -webkit-transform 2s;
+    -ms-transition:width 2s, height 2s, -ms-transform 2s; 
+    -moz-transition:width 2s, height 2s, -moz-transform 2s; 
+    transition:width 2s, height 2s, transform 2s;         
+
+    
+}
+
+#stop:hover{
+    width:300px;
+    height:300px;
+    -ms-transform: rotate(360deg);
+    -webkit-transform:rotate(360deg);   
+    -moz-transform:rotate(360deg);   
+    transform:rotate(360deg); 
+}
+
+#sipka{
+    width:64px ;
+    height: 64px;
+    position:relative;
+    -webkit-animation-name:sipka;
+    -webkit-animation-duration:3s;
+    -webkit-animation-timing-function:linear;
+    -webkit-animation-delay:1s;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-direction:alternate;
+    -webkit-animation-play-state:running;
+    
+    -moz-animation-name:sipka;
+    -moz-animation-duration:3s;
+    -moz-animation-timing-function:linear;
+    -moz-animation-delay:1s;
+    -moz-animation-iteration-count:infinite;
+    -moz-animation-direction:alternate;
+    -moz-animation-play-state:running;
+    
+    -ms-animation-name:sipka;
+    -ms-animation-duration:3s;
+    -ms-animation-timing-function:linear;
+    -ms-animation-delay:1s;
+    -ms-animation-iteration-count:infinite;
+    -ms-animation-direction:alternate;
+    -ms-animation-play-state:running;
+    
+    animation-name:sipka;
+    animation-duration:5s;
+    animation-timing-function:linear;
+    animation-delay:2s;
+    animation-iteration-count:infinite;
+    animation-direction:alternate;
+    animation-play-state:running;
+}
+/*
+@-webkit-keyframes sipka
+{
+    0%   { left:-100px;}
+    25%  { left: 100px; -webkit-transform:rotateY(360deg); }
+    50%  { left: -100px;}
+    75%  { left: 100px; -webkit-transform:rotateY(360deg);}
+    100% { left:-100px;}
+}
+
+@-moz-keyframes sipka
+{
+    0%   { left:-100px;}
+    25%  { left: 100px; -moz-transform:rotateY(360deg); }
+    50%  { left: -100px;}
+    75%  { left: 100px; -moz-transform:rotateY(360deg);}
+    100% { left:-100px;}
+}
+
+@-ms-keyframes sipka
+{
+    0%   { left:-100px;}
+    25%  { left: 100px; -ms-transform:rotateY(360deg); }
+    50%  { left: -100px;}
+    75%  { left: 100px; -ms-transform:rotateY(360deg);}
+    100% { left:-100px;}
+}
+*/
+@keyframes sipka
+{
+    0%   { left:-100px;}
+    25%  { left: 100px; transform:rotateY(360deg); }
+    50%  { left: -100px;}
+    75%  { left: 100px; transform:rotateY(360deg);}
+    100% { left:-100px;}
+}
+
+audio{
+    padding-top: 40px;
+    padding-bottom: 40px;
+    
+}
+
+/* Footer */
+footer {
+    margin: -140px auto 0;
+    padding-top: 110px;
+    min-width: 600px;
+    height: 30px;
+    background-color: #d1be7e;
+    background-image: url(../pictures/les1.gif);
+    background-repeat: repeat-x;
+    position: relative;
+    text-align: center;
+    box-shadow: inset 0 3em 3em -2em #7dbfe9;
+
+}
+

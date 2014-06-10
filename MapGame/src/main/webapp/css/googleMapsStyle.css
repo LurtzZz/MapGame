@@ -1,0 +1,46 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 6.5.2014, 16:32:24
+    Author     : Lurtz
+*/
+
+
+
+html, body{
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+#map-canvas {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+#panel {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    margin-left: -180px;
+    width: 500 px;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+}
+
+#wantedPlace{
+    display: block;
+}
+
+
+td{
+    text-align: center;
+   
+}

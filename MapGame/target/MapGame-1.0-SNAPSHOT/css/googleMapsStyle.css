@@ -9,9 +9,18 @@ and open the template in the editor.
 */
 
 
+
+html, body{
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    
+}
+
 #map-canvas {
-    height: 800px;
-    width: 1400px;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
 }
 
 #panel {
@@ -19,9 +28,19 @@ and open the template in the editor.
     top: 5px;
     left: 50%;
     margin-left: -180px;
-    width: 350px;
+    width: 500 px;
     z-index: 5;
     background-color: #fff;
     padding: 5px;
     border: 1px solid #999;
+}
+
+#wantedPlace{
+    display: block;
+}
+
+
+td{
+    text-align: center;
+   
 }
